@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-        # Runs everyday at 1:00 AM
-        - cron: "0 2 * * *"
+    # Runs everyday at 1:00 AM
+    - cron: "0 1 * * *"
 
 permissions:
   contents: write
@@ -36,10 +36,8 @@ jobs:
         run: |
           javascript-obfuscator origin.js --output _worker.js \
           --compact true \
-          --control-flow-flattening true \
-          --control-flow-flattening-threshold 1 \
-          --dead-code-injection true \
-          --dead-code-injection-threshold 1 \
+          --control-flow-flattening false \ # Reduced Control Flow Flattening
+          --dead-code-injection false \ # Removed Dead Code Injection
           --identifier-names-generator hexadecimal \
           --rename-globals true \
           --string-array true \
@@ -52,6 +50,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: main
-          commit_message: ':arrow_up: update latest bpb panel'
+          commit_message: ':arrow_up: update latest bpb panel (optimized for Cloudflare)'
           commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
           push_options: '--set-upstream'
