@@ -27,24 +27,15 @@ jobs:
       - name: Install dependencies
         run: |
           npm install -g javascript-obfuscator
-      - name: Verify javascript-obfuscator installation
-        run: javascript-obfuscator --version
-
-      - name: Install wget
-        run: sudo apt-get update && sudo apt-get install wget
 
       - name: Clone BPB workjs
         run: |
           wget -O origin.js https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
-      - name: List files in current directory
-        run: ls -l
 
       - name: Obfuscate BPB worker js
         run: |
           javascript-obfuscator origin.js --output _worker.js \
           --compact true \
-          --control-flow-flattening false \
-          --dead-code-injection false \
           --identifier-names-generator hexadecimal \
           --rename-globals true \
           --string-array true \
